@@ -1,0 +1,61 @@
+{% load crispy_forms_tags%}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Guest Book</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <style>
+    br {
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Guestbook</a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="page-header">
+    <br>
+
+    <h1>Guestbook</h1>
+
+    <p class="lead">Write below your comment</p>
+  </div>
+
+
+  <form method="POST" class="form-horizontal sidebar-form" action="?f=form0" enctype="multipart/form-data">
+      {% if form.non_field_errors %}
+    {% if form_error_title %}<h4 class="alert-heading">{{ form_error_title }}</h4>{% endif %}
+    {% for error_message in form.non_field_errors %}
+      <div class="alert alert-block alert-error">
+        {{ error_message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+    {% crispy form %}
+  </form>
+  <br>
+
+  <table class="table">
+    <thead>
+    <td>User</td>
+    <td>Content</td>
+    <td>Created</td>
+    </thead>
+    {% for guest in guest_book_list %}
+      <tr>
+        <td>{{ guest.user_name }}</td>
+        <td>{{ guest.content }}</td>
+        <td>{{ guest.created }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+</body>
+</html>
